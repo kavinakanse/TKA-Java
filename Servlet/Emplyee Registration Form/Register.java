@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/EmpInfo")
-public class Employee extends HttpServlet {
+public class Register extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fname = req.getParameter("fname");
@@ -55,7 +55,7 @@ public class Employee extends HttpServlet {
 			ps.executeUpdate();
 			
 			PrintWriter out = resp.getWriter();
-			System.out.println("Data is insered....");
+			System.out.println("Data inserted....");
 			out.print("<h1>"+"Data is inserted Successfully....."+"</h1>");
 			c.close();
 			
