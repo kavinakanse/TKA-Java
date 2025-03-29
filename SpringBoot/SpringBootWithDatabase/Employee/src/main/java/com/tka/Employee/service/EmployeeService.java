@@ -16,4 +16,14 @@ public class EmployeeService {
 		String msg = sd.insertData(e);
 		return msg;
 	}
+	
+	public String deleteData(int empId) {
+		String msg = sd.deleteData(empId);
+		return msg;
+	}
+
+	public String updateData(Employee e , int empId) {
+		String msg = sd.updateData(e, empId);
+		return msg;
+	}
 }
