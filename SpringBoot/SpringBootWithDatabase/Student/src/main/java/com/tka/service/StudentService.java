@@ -11,10 +11,21 @@ public class StudentService {
 
 	@Autowired
 	StudentDao sd;
-	
+
 	public String insertData(Student s) {
 		String msg = sd.insertData(s);
 		return msg;
+
+	}
+
+	public String deleteData(int studId) {
+		String msg = sd.deleteData(studId);
+		return msg;
 		
+	}
+	
+	public String updateData(Student s, int studId) {
+		String msg = sd.updateData(s, studId);
+		return msg;
 	}
 }
