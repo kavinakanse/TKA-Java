@@ -1,5 +1,7 @@
 package com.tka.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,15 @@ public class StudentService {
 	public String updateData(Student s, int studId) {
 		String msg = sd.updateData(s, studId);
 		return msg;
+	}
+	
+	public Student getSingleRecord(int studId) {
+		Student s = sd.getSingleRecord(studId);
+		return s;
+	}
+	
+	public List<Object> getAllRecord(Student s) {
+		  List<Object> list = sd.getAllRecord(s);
+		  return list;
 	}
 }
