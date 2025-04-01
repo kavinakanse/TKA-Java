@@ -1,11 +1,18 @@
 package com.tka.Employee.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.tka.Employee.entity.Employee;
+
+import jakarta.persistence.criteria.Root;
 
 @Repository
 public class EmployeeDao {
@@ -50,4 +57,32 @@ public class EmployeeDao {
 		return "Data is updated....";
 	}
 
+	public Employee getSingleRecord(int empId) {
+		Session ss = factory.openSession();
+		Transaction tr = ss.beginTransaction();
+		Employee e = ss.get(Employee.class, empId);
+
+		tr.commit();
+		ss.close();
+
+		return e;
+	}
+
+	public List<Object> getAllRecord(Employee e) {
+		Session ss = factory.openSession();
+		Transaction tr = ss.beginTransaction();
+
+		HibernateCriteriaBuilder hcb = ss.getCriteriaBuilder();
+		JpaCriteriaQuery<Object> jcq = hcb.createQuery();
+		Root<Employee> root = jcq.from(Employee.class);
+
+		jcq.select(root);
+
+		Query<Object> query = ss.createQuery(jcq);
+		List<Object> list = query.getResultList();
+		tr.commit();
+		ss.close();
+
+		return list;
+	}
 }
