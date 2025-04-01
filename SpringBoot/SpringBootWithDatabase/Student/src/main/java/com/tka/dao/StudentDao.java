@@ -1,25 +1,28 @@
 package com.tka.dao;
 
-import com.tka.StudentApplication;
 import com.tka.entity.Student;
+
+import jakarta.persistence.criteria.Root;
+
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentDao {
 
-	private final StudentApplication studentApplication;
 
 	@Autowired
 	SessionFactory factory;
 
-	StudentDao(StudentApplication studentApplication) {
-		this.studentApplication = studentApplication;
-	}
+	
 
 	public String insertData(Student s) {
 		Session ss = factory.openSession();
@@ -61,4 +64,35 @@ public class StudentDao {
 		return "Data is updated....";
 
 	}
+
+	public Student getSingleRecord(int studId) {
+		Session ss = factory.openSession();
+		Transaction tr = ss.beginTransaction();
+
+		Student s = ss.get(Student.class, studId);
+		tr.commit();
+		ss.close();
+		return s;
+
+	}
+
+	public List<Object> getAllRecord(Student s) {
+		Session ss = factory.openSession();
+		Transaction tr = ss.beginTransaction();
+
+		HibernateCriteriaBuilder hcb = ss.getCriteriaBuilder();
+		JpaCriteriaQuery<Object> jcq = hcb.createQuery();
+		Root<Student> root = jcq.from(Student.class);
+
+		jcq.select(root);
+
+		Query<Object> query = ss.createQuery(jcq);
+		List<Object> list = query.getResultList();
+		tr.commit();
+		ss.close();
+		
+		return list;
+
+	}
+
 }
