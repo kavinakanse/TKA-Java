@@ -1,7 +1,10 @@
 package com.tka.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,6 +39,19 @@ public class StudentController {
 	public String updateData(@RequestBody Student s, @PathVariable  int studId) {
 		String msg = service.updateData(s, studId);
 		return msg;
+	}
+	
+	@GetMapping("/getsinglerecord")
+	public Student getSingleRecord(@RequestParam int studId) {
+		Student s = service.getSingleRecord(studId);
+		return s;
+		
+	}
+	
+	@GetMapping("/getallrecord")
+	public List<Object> getAllRecord(Student s) {
+		List<Object> list = service.getAllRecord(s);
+		return list;
 	}
 
 }
